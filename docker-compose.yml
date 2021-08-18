@@ -32,7 +32,7 @@ services:
       - VIRTUAL_HOST=${HOST_URL}
       - VIRTUAL_PORT=${VIRTUAL_PORT}
       - LETSENCRYPT_HOST=${HOST_URL}
-      - LETSENCRYPT_EMAIL=${MAIL_SUPPORT}
+      - LETSENCRYPT_EMAIL=${MAIL_ENCRYPTION}
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
@@ -53,7 +53,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - dbdata:/var/lib/mysql
+      - ./mysql/dbdata:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - default
@@ -73,6 +73,18 @@ services:
       UPLOAD_LIMIT: 1000000000
     networks:
       - default
+
+#  emx_mail:
+#    image: bytemark/smtp
+#    container_name: emx_mail
+#    restart: unless-stopped
+#    environment:
+#      RELAY_HOST: ${SMTP_MAIL_HOST}
+#      RELAY_PORT: ${SMTP_MAIL_PORT}
+#      RELAY_USERNAME: ${MAIL_USERNAME}
+#      RELAY_PASSWORD: ${MAIL_PASSWORD}
+#    networks:
+#      - app-network
 
 
 #Docker Networks
